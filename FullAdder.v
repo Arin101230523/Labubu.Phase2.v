@@ -1,8 +1,3 @@
-//=============================================
-//
-// Full Adder
-//
-//=============================================
 module FullAdder(A,B,C,carry,sum);
 	input A;
 	wire A;
@@ -14,12 +9,11 @@ module FullAdder(A,B,C,carry,sum);
 	output sum;
 	reg carry;
 	reg sum;
-//---------------------------------------------
+	
 	always @(*) 
 	  begin
  		sum= A^B^C;
- 		carry=((A^B)&C)|(A&B);  
+ 		carry<=((A^B)&C)|(A&B);  
 	  end
-//---------------------------------------------
 	
 endmodule

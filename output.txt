@@ -1,46 +1,29 @@
-PS C:\Users\arins\Downloads\Labubu.Phase2.v> iverilog -g2012 -o labu.vvp FullAdder.v 4BitAddSub.v EightBitAddSub.v EightBitMul.v 4BitDiv.v 4BitMod.v 4BitOR.v 4BitAND.v 4BitXOR.v 4bitBuffer.v Dec4x16.v mux16x8.v dff.v breadboard.v testbench.v
->> 
->> vvp labu.vvp
-==============================================================================
-   LABU - Labubu Adaptive Behavioral Unit              Phase 2 Output
-==============================================================================
-   Time  |     Behavior      | Opcode   | Input A      | State        | ERR
-------------------------------------------------------------------------------
-      6 | [RESET PULSE]      | rst=1    | A=  0        | STATE=  0    | ERR=0
-     16 |  STARE    NO-OP  | OP=0000 (0) | A=  0 (0x00) | STATE=  0 (0x00) | ERR=0
-     26 |  SLEEP    RESET  | OP=0001 (1) | A=  0 (0x00) | STATE=  0 (0x00) | ERR=0
-     36 |  SNACK    ADD    | OP=0010 (2) | A= 75 (0x4b) | STATE= 75 (0x4b) | ERR=0
-     46 |  SNACK    ADD    | OP=0010 (2) | A= 30 (0x1e) | STATE=105 (0x69) | ERR=0
-     56 |  DRAIN    SUB    | OP=0011 (3) | A= 25 (0x19) | STATE= 80 (0x50) | ERR=0
-     66 |  FART     DIV    | OP=0100 (4) | A=  8 (0x08) | STATE= 10 (0x0a) | ERR=0
-     76 |  POOP     MOD    | OP=0101 (5) | A=  3 (0x03) | STATE=  1 (0x01) | ERR=0
-     86 |  SNACK    ADD    | OP=0010 (2) | A= 49 (0x31) | STATE= 50 (0x32) | ERR=0
-     96 |  SUGARUSH MUL    | OP=0110 (6) | A=  3 (0x03) | STATE=150 (0x96) | ERR=0
-    106 |  ZOOMIES  SHL    | OP=0111 (7) | A=  0 (0x00) | STATE= 44 (0x2c) | ERR=0
-    116 |  NAP      SHR    | OP=1000 (8) | A=  0 (0x00) | STATE= 22 (0x16) | ERR=0
-    126 |  GIGGLE   XOR    | OP=1001 (9) | A=255 (0xff) | STATE=233 (0xe9) | ERR=0
-    136 |  PARTY    OR     | OP=1010 (a) | A= 15 (0x0f) | STATE=239 (0xef) | ERR=0
-    146 |  GRUMPY   AND    | OP=1011 (b) | A=240 (0xf0) | STATE=224 (0xe0) | ERR=0
-    156 |  GHOST    NOT    | OP=1100 (c) | A=  0 (0x00) | STATE= 31 (0x1f) | ERR=0
-    166 |  DANCE    SWAP   | OP=1101 (d) | A=  0 (0x00) | STATE=241 (0xf1) | ERR=0
-    176 |  MAXOUT   CONST  | OP=1110 (e) | A=  0 (0x00) | STATE=255 (0xff) | ERR=0
-    186 |  MINOUT   CONST  | OP=1111 (f) | A=  0 (0x00) | STATE=  1 (0x01) | ERR=0
-------------------------------------------------------------------------------
-  ERROR HANDLING TESTS
-------------------------------------------------------------------------------
-    196 |  FART/0   ERR    | OP=0100 (4) | A=  0 (0x00) | STATE=  x (0xxx) | ERR=1
-    206 |  POOP/0   ERR    | OP=0101 (5) | A=  0 (0x00) | STATE=  x (0xxx) | ERR=1
-    216 |  SLEEP    RESET  | OP=0001 (1) | A=  0 (0x00) | STATE=  0 (0x00) | ERR=0
-    226 |  SNACK+FF ADD    | OP=0010 (2) | A=255 (0xff) | STATE=255 (0xff) | ERR=0
-    236 |  SNACK 265 ADD   | OP=0010 (2) | A= 10 (0x0a) | STATE=  9 (0x09) | ERR=1
-==============================================================================
-  [INFO] All 16 opcodes exercised. Sequential clock-driven program complete.
-  [STRUCTURAL]  : Dec4x16, Mux16x8, EightBitAddSub, FourBitAddSub,
-                  FullAdder, FourBitXOR, FourBitOR, FourBitAND, DFF
-  [BEHAVIORAL]  : FourBitDiv (GasDiv), FourBitMod (PoopMod),
-                  EightBitMul (SugarRush) - structural equiv. too large
-  [FEEDBACK]    : cur[7:0] wire from ACC1 (DFF[7:0]) to all math units
-  [ERROR CODES] : overflow on ADD/SUB, divide-by-zero on DIV/MOD
-==============================================================================
-testbench.v:131: $finish called at 246 (1s)
-PS C:\Users\arins\Downloads\Labubu.Phase2.v> 
+PS C:\Users\arins\Downloads\Labubu.Phase2.v> iverilog -o labubu.vvp FullAdder.v dff.v Dec4x16.v FourBitAddSub.v 32BitAddSub.v 32BitMul.v 32BitDiv.v 32BitMod.v 32BitXOR.v 32BitOR.v 32BitAnd.v mux16x32.v breadboard.v testbench.v
+>> vvp labubu.vvp
+Test Results:
+Reset Complete. ACC1: 0x00000000
+Time:   17 | CMD:SNACK (ADD) | Op:0010 | FB Loop:0x00000000 | Input:0x00001000 | Res:0x00001000 | Stat:0000 [OK]
+Time:   27 | CMD:SNACK (ADD) | Op:0010 | FB Loop:0x00001000 | Input:0x00001000 | Res:0x00002000 | Stat:0000 [OK]
+Time:   37 | CMD:SNACK (ADD) | Op:0010 | FB Loop:0x00002000 | Input:0x00001000 | Res:0x00003000 | Stat:0000 [OK]
+Time:   47 | CMD:DRAIN (SUB) | Op:0011 | FB Loop:0x00003000 | Input:0x00000500 | Res:0x00002b00 | Stat:0000 [OK]
+Time:   57 | CMD:SUGAR (MUL) | Op:0110 | FB Loop:0x00002b00 | Input:0x00000002 | Res:0x00005600 | Stat:0000 [OK]
+Time:   67 | CMD:FART (DIV) | Op:0100 | FB Loop:0x00005600 | Input:0x00000002 | Res:0x00002b00 | Stat:0000 [OK]
+Time:   77 | CMD:POOP (MOD) | Op:0101 | FB Loop:0x00002b00 | Input:0x00000100 | Res:0x00000000 | Stat:0000 [OK]
+Time:   87 | CMD:GRUMPY (AND) | Op:1011 | FB Loop:0x00000000 | Input:0x00000007 | Res:0x00000000 | Stat:0000 [OK]
+Time:   97 | CMD:PARTY (OR) | Op:1010 | FB Loop:0x00000000 | Input:0x00000010 | Res:0x00000010 | Stat:0000 [OK]
+Time:  107 | CMD:GIGGLE (XOR) | Op:1001 | FB Loop:0x00000010 | Input:0x00000017 | Res:0x00000007 | Stat:0000 [OK]
+Time:  117 | CMD:GHOST (NOT) | Op:1100 | FB Loop:0x00000007 | Input:0x00000000 | Res:0xfffffff8 | Stat:0000 [OK]
+Time:  127 | CMD:SLEEP (RST) | Op:0001 | FB Loop:0x0000fff8 | Input:0x00000000 | Res:0x00000000 | Stat:0000 [OK]
+Time:  137 | CMD:SNACK (ADD) | Op:0010 | FB Loop:0x00000000 | Input:0x00000001 | Res:0x00000001 | Stat:0000 [OK]
+Time:  147 | CMD:ZOOM (SHL) | Op:0111 | FB Loop:0x00000001 | Input:0x00000000 | Res:0x00000002 | Stat:0000 [OK]
+Time:  157 | CMD:NAP (SHR) | Op:1000 | FB Loop:0x00000002 | Input:0x00000000 | Res:0x00000001 | Stat:0000 [OK]
+Time:  167 | CMD:DANCE (SWAP) | Op:1101 | FB Loop:0x00000001 | Input:0x00000000 | Res:0x00010000 | Stat:0000 [OK]
+Time:  177 | CMD:STARE (NOP) | Op:0000 | FB Loop:0x00000000 | Input:0xffffffff | Res:0x00010000 | Stat:0000 [OK]
+Time:  187 | CMD:MAXOUT (MAX) | Op:1110 | FB Loop:0x00000000 | Input:0x00000000 | Res:0xffffffff | Stat:0000 [OK]
+Time:  197 | CMD:MINOUT (MIN) | Op:1111 | FB Loop:0x0000ffff | Input:0x00000000 | Res:0x00000001 | Stat:0000 [OK]
+Time:  207 | CMD:FART (DIV) | Op:0100 | FB Loop:0x00000001 | Input:0x00000000 | Res:0x00000000 | Stat:0011 [DIV_BY0]
+Time:  217 | CMD:POOP (MOD) | Op:0101 | FB Loop:0x00000000 | Input:0x00000000 | Res:0x00000000 | Stat:0100 [MOD_BY0]
+Time:  227 | CMD:MAXOUT (MAX) | Op:1110 | FB Loop:0x00000000 | Input:0x00000000 | Res:0xffffffff | Stat:0000 [OK]
+Time:  237 | CMD:SNACK (ADD) | Op:0010 | FB Loop:0x0000ffff | Input:0x00000001 | Res:0x00010000 | Stat:0000 [OK]
+Done
+testbench.v:114: $finish called at 247 (1s)
