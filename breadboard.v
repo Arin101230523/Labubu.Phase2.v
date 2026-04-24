@@ -44,22 +44,27 @@ module breadboard(clk, rst, A, opcode, C, error, status);
     ThirtyTwoBitMAX  maxout_unit(max_res);
     ThirtyTwoBitMIN  minout_unit(min_res);
 
+    // NOP and RESET
+    wire [31:0] nop_res, rst_res;
+    ThirtyTwoBitNOP stare_unit(acc_out, nop_res);
+    ThirtyTwoBitRST sleep_unit(rst_res);
+
     // Multiplexer Channels
     wire [511:0] channels;
-    assign channels[31:0]   = acc_out;  // 0000: NOP
-    assign channels[63:32]  = 32'h0;    // 0001: RESET
-    assign channels[95:64]  = sum_res;  // 0010: ADD
-    assign channels[127:96] = sub_res;  // 0011: SUB
-    assign channels[159:128] = div_res; // 0100: DIV
-    assign channels[191:160] = mod_res; // 0101: MOD
-    assign channels[223:192] = mul_res; // 0110: MUL
+    assign channels[31:0]    = nop_res; // 0000: STARE (NOP)
+    assign channels[63:32]   = rst_res; // 0001: SLEEP (RESET)
+    assign channels[95:64]   = sum_res; // 0010: SNACK (ADD)
+    assign channels[127:96]  = sub_res; // 0011: DRAIN (SUB)
+    assign channels[159:128] = div_res; // 0100: FART (DIV)
+    assign channels[191:160] = mod_res; // 0101: POOP (MOD)
+    assign channels[223:192] = mul_res; // 0110: SUGAR (MUL)
     assign channels[255:224] = shl_res; // 0111: ZOOM (SHL)
     assign channels[287:256] = shr_res; // 1000: NAP  (SHR)
-    assign channels[319:288] = xor_res; // 1001: XOR
-    assign channels[351:320] = or_res;  // 1010: OR
-    assign channels[383:352] = and_res; // 1011: AND
-    assign channels[415:384] = not_res; // 1100: NOT
-    assign channels[447:416] = swap_res;// 1101: DANCE (SWAP)
+    assign channels[319:288] = xor_res; // 1001: GIGGLE (XOR)
+    assign channels[351:320] = or_res; // 1010: PARTY (OR)
+    assign channels[383:352] = and_res; // 1011: GRUMPY (AND)
+    assign channels[415:384] = not_res; // 1100: GHOST (NOT)
+    assign channels[447:416] = swap_res; // 1101: DANCE (SWAP)
     assign channels[479:448] = max_res; // 1110: MAXOUT (MAX)
     assign channels[511:480] = min_res; // 1111: MINOUT (MIN)
 
