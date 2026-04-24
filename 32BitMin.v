@@ -1,0 +1,3 @@
+module ThirtyTwoBitMIN(output [31:0] Y);
+    assign Y = 32'h00000001;
+endmodule

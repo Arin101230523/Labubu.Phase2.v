@@ -62,7 +62,7 @@ module testbench();
             else if (status == 4'b0101) sname = "MUL_OVF";
             else sname = "UNKNOWN";
             
-            $display("Time:%5t | CMD:%0s | Op:%b | FB Loop:0x%h | Input:0x%h | Res:0x%h | Stat:%b [%0s]", 
+            $display("Time:%5t | CMD:%-15s | Op:%b | FB Loop:0x%h | Input:0x%h | Res:0x%h | Stat:%b [%0s]", 
                       $time, cmd_name, op, fb32, val, C, status, sname);
         end
     endtask

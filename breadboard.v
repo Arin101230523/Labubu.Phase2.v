@@ -36,24 +36,32 @@ module breadboard(clk, rst, A, opcode, C, error, status);
     ThirtyTwoBitAND grumpy_unit(cur32, A, and_res);
     ThirtyTwoBitNOT ghost_unit(cur32, not_res);
 
+    // Shift, Swap, Constants
+    wire [31:0] shl_res, shr_res, swap_res, max_res, min_res;
+    ThirtyTwoBitSHL  zoom_unit(cur32, shl_res);
+    ThirtyTwoBitSHR  nap_unit(cur32, shr_res);
+    ThirtyTwoBitSWAP dance_unit(acc_out, swap_res);
+    ThirtyTwoBitMAX  maxout_unit(max_res);
+    ThirtyTwoBitMIN  minout_unit(min_res);
+
     // Multiplexer Channels
     wire [511:0] channels;
-    assign channels[31:0] = acc_out; // 0000: NOP
-    assign channels[63:32] = 32'h0; // 0001: RESET
-    assign channels[95:64] = sum_res; // 0010: ADD
-    assign channels[127:96] = sub_res; // 0011: SUB
+    assign channels[31:0]   = acc_out;  // 0000: NOP
+    assign channels[63:32]  = 32'h0;    // 0001: RESET
+    assign channels[95:64]  = sum_res;  // 0010: ADD
+    assign channels[127:96] = sub_res;  // 0011: SUB
     assign channels[159:128] = div_res; // 0100: DIV
     assign channels[191:160] = mod_res; // 0101: MOD
     assign channels[223:192] = mul_res; // 0110: MUL
-    assign channels[255:224] = {cur32[30:0], 1'b0}; // 0111: Shift Left (SHL)
-    assign channels[287:256] = {1'b0, cur32[31:1]}; // 1000: Shift Right (SHR)
+    assign channels[255:224] = shl_res; // 0111: ZOOM (SHL)
+    assign channels[287:256] = shr_res; // 1000: NAP  (SHR)
     assign channels[319:288] = xor_res; // 1001: XOR
-    assign channels[351:320] = or_res; // 1010: OR
+    assign channels[351:320] = or_res;  // 1010: OR
     assign channels[383:352] = and_res; // 1011: AND
     assign channels[415:384] = not_res; // 1100: NOT
-    assign channels[447:416] = {acc_out[15:0], acc_out[31:16]}; // 1101: SWAP
-    assign channels[479:448] = 32'hFFFFFFFF; // 1110: MAX
-    assign channels[511:480] = 32'h00000001; // 1111: MIN
+    assign channels[447:416] = swap_res;// 1101: DANCE (SWAP)
+    assign channels[479:448] = max_res; // 1110: MAXOUT (MAX)
+    assign channels[511:480] = min_res; // 1111: MINOUT (MIN)
 
     wire [31:0] next;
     Mux16x32 brain_mux(channels, select, next);

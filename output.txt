@@ -1,4 +1,4 @@
-PS C:\Users\arins\Downloads\Labubu.Phase2.Verilog> iverilog -o labubu.vvp FullAdder.v dff.v Dec4x16.v FourBitAddSub.v 32BitAddSub.v 32BitMul.v 32BitDiv.v 32BitMod.v 32BitXOR.v 32BitOR.v 32BitAnd.v mux16x32.v FourBitAND.v OneBitAND.v OneBitNOT.v ThirtyTwoFiveOR.v FourBitOR.v ThirtyTwoBitNOT.v breadboard.v testbench.v
+PS C:\Users\arins\Downloads\Labubu.Phase2.Verilog> iverilog -o labubu.vvp FullAdder.v dff.v Dec4x16.v FourBitAddSub.v 32BitAddSub.v 32BitMul.v 32BitDiv.v 32BitMod.v 32BitXOR.v 32BitOR.v 32BitAnd.v mux16x32.v FourBitAND.v OneBitAND.v OneBitNOT.v ThirtyTwoFiveOR.v FourBitOR.v ThirtyTwoBitNOT.v 32BitMax.v 32BitMin.v 32BitSHL.v 32BitSHR.v 32BitSwap.v breadboard.v testbench.v
 >> vvp labubu.vvp
 Test Results:
 Reset Complete. ACC1: 0x00000000
